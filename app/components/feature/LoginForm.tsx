@@ -20,26 +20,9 @@ const LoginForm = () => {
     setFormData({...formData, [e.target.name]: e.target.value})
   }
 
-  const submitFormHandler = async(e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
-    console.log("Session", session)
-    try {
-      await signIn("credentials", {
-        username,
-        password,
-        redirect: false,
-
-      })
-    } catch (error) {
-      
-    }
-    finally{
-      setIsLoading(false)
-    }
-  }
+  
   return (
-    <form className="mt-12" onSubmit={submitFormHandler}>
+    <form className="mt-12" onSubmit={()=>{}}>
         <Card>
           <Input placeholder='Enter username / email' value={username} name="username" onChange={formDataHandler} />
           <Input placeholder='Enter password' value={password} name="password" onChange={formDataHandler} />
