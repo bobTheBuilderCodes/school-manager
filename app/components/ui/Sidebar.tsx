@@ -9,7 +9,7 @@ import { AppstoreOutlined, HomeOutlined, DoubleRightOutlined, DoubleLeftOutlined
 
 const Sidebar = () => {
 
-    const navIcons = [<HomeOutlined />, <AppstoreOutlined />, <TeamOutlined />, <UsergroupAddOutlined />, <SettingOutlined />]
+    const navIcons = [<HomeOutlined key={Math.random() * 2300} />, <AppstoreOutlined key={Math.random() * 2300} />, <TeamOutlined key={Math.random() * 2300} />, <UsergroupAddOutlined key={Math.random() * 2300} />, <SettingOutlined key={Math.random() * 2300}/>]
   const [isOpen, setIsOpen] = useState(false);
 
   const navStyle = isOpen ? "w-[70px]" : "w-[200px]";
