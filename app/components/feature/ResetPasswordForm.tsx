@@ -1,11 +1,10 @@
 "use client"
 
 import { signIn, useSession } from 'next-auth/react'
-import {Button, Input, Card, Paragraph} from '..'
+import {Button, Input, Card} from '..'
 import { ChangeEvent, FormEvent, useState } from 'react'
-import Link from 'next/link'
 
-const LoginForm = () => {
+const ResetPasswordForm = () => {
 
   const {data : session} = useSession()
   const [isLoading, setIsLoading] = useState(false)
@@ -41,15 +40,13 @@ const LoginForm = () => {
   return (
     <form className="mt-12" onSubmit={submitFormHandler}>
         <Card>
-          <Input placeholder='Enter username / email' value={username} name="username" onChange={formDataHandler} />
-          <Input placeholder='Enter password' value={password} name="password" onChange={formDataHandler} />
-          <Link href={'/forgot-password'}>
-            <Paragraph title='Forgot Password' className='underline text-right mb-5' />
-          </Link>
+         
+          <Input placeholder='Enter new password' value={password} name="password" onChange={formDataHandler} />
+          <Input placeholder='Confirm new password' value={password} name="password" onChange={formDataHandler} />
           <Button title="Log in" />
         </Card>
       </form>
   )
 }
 
-export default LoginForm
+export default ResetPasswordForm
