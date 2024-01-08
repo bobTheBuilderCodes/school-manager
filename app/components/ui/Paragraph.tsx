@@ -1,7 +1,7 @@
 
 
 interface ParagraphProps{
-  title: string,
+  title: string | null | undefined,
   className?: string
 }
 const Paragraph = ({title, className}: ParagraphProps) => {

@@ -26,3 +26,19 @@ body {
   background: linear-gradient(90deg,#4ca5ff,#b573f8);
   color: white;
 }
+
+
+.textClip {
+  background: linear-gradient(90deg,#4ca5ff,#b573f8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 20px;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+
+.textClip {
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}

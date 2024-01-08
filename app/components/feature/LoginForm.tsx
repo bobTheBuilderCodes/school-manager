@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from 'next-auth/react'
 import {Button, Input, Card, Paragraph} from '..'
-import { ChangeEvent, FormEvent, useLayoutEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -31,9 +31,10 @@ const router = useRouter()
         username,
         password,
       })
+      setIsLoading(false)
 
     } catch (error) {
-      
+      setIsLoading(false)
     }
     finally{
       setIsLoading(false)
@@ -49,7 +50,7 @@ const router = useRouter()
           <Link href={'/forgot-password'}>
             <Paragraph title='Forgot Password' className='underline text-right mb-5' />
           </Link>
-          <Button title="Log in" type='submit' />
+          <Button title={`${isLoading ? 'Logging in...' : 'Log in'}`} type='submit' />
         </Card>
       </form>
   )

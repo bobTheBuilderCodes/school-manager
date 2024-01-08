@@ -25,7 +25,7 @@ const Sidebar = () => {
           width={40}
           height={40}
           onClick={() => setIsOpen(!isOpen)}
-          className=" my-5 rounded-full"
+          className=" my-5 rounded-full mx-1"
         />
         <button onClick={() => setIsOpen(!isOpen)} title="Collapse sidebar">
         {isOpen ? '' : <DoubleLeftOutlined />}
