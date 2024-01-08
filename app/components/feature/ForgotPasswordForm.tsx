@@ -5,7 +5,7 @@ import {Button, Input, Card, Paragraph} from '..'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
 
-const LoginForm = () => {
+const ForgotPasswordForm = () => {
 
   const {data : session} = useSession()
   const [isLoading, setIsLoading] = useState(false)
@@ -41,15 +41,14 @@ const LoginForm = () => {
   return (
     <form className="mt-12" onSubmit={submitFormHandler}>
         <Card>
-          <Input placeholder='Enter username / email' value={username} name="username" onChange={formDataHandler} />
-          <Input placeholder='Enter password' value={password} name="password" onChange={formDataHandler} />
-          <Link href={'/forgot-password'}>
-            <Paragraph title='Forgot Password' className='underline text-right mb-5' />
+          <Input placeholder='Enter email' value={username} name="username" onChange={formDataHandler} />
+          <Button title="Send Link" />
+          <Link href={'/'}>
+            <Paragraph title='Back to log in' className='underline text-center mt-5' />
           </Link>
-          <Button title="Log in" />
         </Card>
       </form>
   )
 }
 
-export default LoginForm
+export default ForgotPasswordForm
