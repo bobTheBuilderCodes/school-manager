@@ -30,7 +30,13 @@ const Navbar = () => {
 
   return (
     <nav className="border-b-2 border-gray-900 bg-[#0E1117] p-3 w-full h-auto z-20">
-      
+      {
+        <p onClick={()=>signOut({
+          callbackUrl: '/'
+        })}>
+          Sign Out
+        </p>
+      }
      {content}
     </nav>
   );

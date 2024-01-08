@@ -1,8 +1,22 @@
 import React from "react";
 import Sidebar from "../components/ui/Sidebar";
 import Navbar from "../components/ui/Navbar";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+
+const Layout = async({ children }: { children: React.ReactNode }) => {
+ const session = await getServerSession(authOptions)
+
+//  if(session?.user.accessToken){
+//   redirect("/dashboard")
+//  }
+
+  if(!session?.user.accessToken){
+    redirect("/")
+  }
+
   return (
     <div className="flex">
       <div>
