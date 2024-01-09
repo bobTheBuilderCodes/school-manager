@@ -9,7 +9,7 @@ export const api = {
 
   // Tickets
   allTickets: `${baseUrl}/ticket/allTickets`,
-  studentTickets: `${baseUrl}/ticket/tickets/`, 
+  studentTickets: `${baseUrl}/ticket/tickets`, 
   getTickets: `${baseUrl}/ticket/tickets`,
   getPendingTickets: `${baseUrl}/ticket/pending/pendingTickets`,
   getApprovedTickets: `${baseUrl}/ticket/approved/approvedTickets`,
