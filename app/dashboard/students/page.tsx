@@ -16,7 +16,7 @@ const Students = async () => {
         <div className="flex justify-between flex-wrap">
           {students?.map(({email,firstName, rollId, gender, username}) => (
             <StudentCard
-              key={rollId} // Ensure each item has a unique key
+              key={rollId} 
               firstName={firstName}
               gender={gender}
               username={username}

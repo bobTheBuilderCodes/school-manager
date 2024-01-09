@@ -3,7 +3,8 @@ import Sidebar from "../components/ui/Sidebar";
 import Navbar from "../components/ui/Navbar";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../api/auth/[...nextauth]/options";
+
 
 
 const Layout = async({ children }: { children: React.ReactNode }) => {
