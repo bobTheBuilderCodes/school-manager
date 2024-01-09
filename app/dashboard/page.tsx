@@ -5,6 +5,8 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 import { Heading } from '../components'
 import { authOptions } from '../api/auth/[...nextauth]/options'
+import Image from 'next/image'
+import Picture from '@/resources/BackgroundImage.svg'
 
 const DashboardHome = async() => {
 
@@ -14,6 +16,7 @@ const DashboardHome = async() => {
   return (
     <div>
         <Heading title={`Welcome ${loggedInUser}`}  />
+      
        {/* {JSON.stringify(session)} */}
     </div>
   )
