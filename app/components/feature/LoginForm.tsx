@@ -4,6 +4,7 @@ import { signIn, useSession } from 'next-auth/react'
 import {Button, Input, Card, Paragraph} from '..'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const LoginForm = () => {
 
@@ -15,7 +16,8 @@ const LoginForm = () => {
   })
 
   const {username, password} = formData
-
+const {data} = useSession()
+const router = useRouter()
   const formDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value})
   }
@@ -28,16 +30,18 @@ const LoginForm = () => {
       await signIn("credentials", {
         username,
         password,
-        redirect: false,
-
       })
+      setIsLoading(false)
+
     } catch (error) {
-      
+      setIsLoading(false)
     }
     finally{
       setIsLoading(false)
     }
   }
+  
+
   return (
     <form className="mt-12" onSubmit={submitFormHandler}>
         <Card>
@@ -46,7 +50,7 @@ const LoginForm = () => {
           <Link href={'/forgot-password'}>
             <Paragraph title='Forgot Password' className='underline text-right mb-5' />
           </Link>
-          <Button title="Log in" />
+          <Button title={`${isLoading ? 'Logging in...' : 'Log in'}`} type='submit' />
         </Card>
       </form>
   )

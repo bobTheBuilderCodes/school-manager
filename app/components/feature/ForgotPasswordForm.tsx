@@ -20,26 +20,9 @@ const ForgotPasswordForm = () => {
     setFormData({...formData, [e.target.name]: e.target.value})
   }
 
-  const submitFormHandler = async(e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
-    console.log("Session", session)
-    try {
-      await signIn("credentials", {
-        username,
-        password,
-        redirect: false,
-
-      })
-    } catch (error) {
-      
-    }
-    finally{
-      setIsLoading(false)
-    }
-  }
+  
   return (
-    <form className="mt-12" onSubmit={submitFormHandler}>
+    <form className="mt-12" onSubmit={()=>{}}>
         <Card>
           <Input placeholder='Enter email' value={username} name="username" onChange={formDataHandler} />
           <Button title="Send Link" />
