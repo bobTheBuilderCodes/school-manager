@@ -31,7 +31,7 @@ export const getStudentData = async (url: string) => {
     return findStudent;
   };
 
-export const getSingleData = async (url: string) => {
+export const getStudentTickets = async (url: string) => {
   const session = await getServerSession(authOptions)
   const authToken = session?.user.accessToken
 
@@ -41,7 +41,7 @@ export const getSingleData = async (url: string) => {
     cache: "no-store",
   };
     const response = await fetch(url, {headers});
-    const {data} = await response.json();
+    const data = await response.json();
   
     return data;
   };

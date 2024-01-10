@@ -16,7 +16,6 @@ const UserProfile = async ({ params }: UserProps) => {
   const currentStudent: StudentDetails = await getStudentData(
     `${api.singleStudent}/${params.userId}`
   );
-  console.log("User", currentStudent)
 
   const { firstName, email, middleName, lastName, role } = currentStudent;
   

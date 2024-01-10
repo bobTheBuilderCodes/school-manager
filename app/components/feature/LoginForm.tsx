@@ -45,8 +45,8 @@ const router = useRouter()
   return (
     <form className="mt-12" onSubmit={submitFormHandler}>
         <Card>
-          <Input placeholder='Enter username / email' value={username} name="username" onChange={formDataHandler} />
-          <Input placeholder='Enter password' value={password} name="password" onChange={formDataHandler} />
+          <Input placeholder='Enter username / email' value={username} name="username" onChange={formDataHandler} className='w-full py-2 mb-4'/>
+          <Input type='password' placeholder='Enter password'  value={password} name="password" onChange={formDataHandler} className='w-full py-2 mb-4' />
           <Link href={'/forgot-password'}>
             <Paragraph title='Forgot Password' className='underline text-right mb-5' />
           </Link>
