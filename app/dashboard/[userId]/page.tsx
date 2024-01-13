@@ -2,7 +2,7 @@ import { Button, Card, Heading, Paragraph } from "@/app/components";
 import SubHeading from "@/app/components/ui/SubHeading";
 import assets from "@/resources/assets";
 import { api } from "@/services/endpoints";
-import { getSingleData, getStudentData } from "@/services/getData";
+import { getStudentData } from "@/services/getData";
 import { StudentDetails } from "@/types/StudentProps";
 import Image from "next/image";
 import React from "react";
@@ -17,7 +17,6 @@ const UserProfile = async ({ params }: UserProps) => {
     `${api.singleStudent}/${params.userId}`
   );
 
-  const { firstName, email, middleName, lastName, role } = currentStudent;
   
   return (
     <div className="flex justify-center">
@@ -32,8 +31,8 @@ const UserProfile = async ({ params }: UserProps) => {
             className="rounded-full mx-5"
           />
           <div className="mr-auto">
-            <Heading title={`${firstName} ${lastName}`} className="mb-3" />
-            <Paragraph title={email} className="mb-5" />
+            <Heading title={`${currentStudent?.firstName} ${currentStudent?.lastName}`} className="mb-3" />
+            <Paragraph title={currentStudent?.email} className="mb-5" />
             <div className="flex items-center">
               <p className="textClip">Edit Profile</p>
               <Paragraph title={"|"} className="mx-4" />

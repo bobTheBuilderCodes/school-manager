@@ -1,7 +1,9 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Button, Heading, Input, Paragraph } from "@/app/components";
+import Actionbar from "@/app/components/feature/Actionbar";
 import Actions from "@/app/components/feature/Actions";
 import Modal from "@/app/components/ui/Modal";
+import Select from "@/app/components/ui/Select";
 import SubHeading from "@/app/components/ui/SubHeading";
 import Table from "@/app/components/ui/Table";
 import { api } from "@/services/endpoints";
@@ -13,26 +15,20 @@ const Tickets = async () => {
   const session = await getServerSession(authOptions);
   const userId = session?.user.userId;
 
-  const studentTickets = await getStudentTickets(
+  const {studentTickets} = await getStudentTickets(
     `${api.studentTickets}/${userId}`
   );
-  const data = studentTickets.data.studentTickets;
-
+  // const data = studentTickets ;
+// console.log("Tickets", data)
   const myData = [{ name: "", age: 22 }];
 
   return (
     <div>
       <div className="flex justify-between items-center">
-        <div className="flex justify-between items-center w-full mb-4">
-          <SubHeading title="All Tickets" />
-          <div className="flex items-center w-1/3 justify-end bg-green-200">
-            <Input placeholder="Search tickets by name" name="" className="w-72 py-2"/>
-            <Button title="Add Ticket" className="w-12 mr-3" />
-          </div>
-        </div>
+        <Actionbar />
       </div>
       <Table
-        data={data}
+        data={studentTickets}
         visibleColumns={["ticketName", "reason", "ticketDate", "ticketStatus"]}
         actions={
           <Actions>
@@ -41,9 +37,6 @@ const Tickets = async () => {
           </Actions>
         }
       />
-      {/* <Modal >
-          <SubHeading title='Add Ticket' />
-        </Modal> */}
     </div>
   );
 };

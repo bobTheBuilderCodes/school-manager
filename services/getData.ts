@@ -41,7 +41,7 @@ export const getStudentTickets = async (url: string) => {
     cache: "no-store",
   };
     const response = await fetch(url, {headers});
-    const data = await response.json();
+    const {data} = await response.json();
   
     return data;
   };

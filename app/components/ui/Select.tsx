@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
 
-const Select = () => {
-  return (
-    <div>Select</div>
-  )
+interface SelectProps {
+  options: string[];
 }
 
-export default Select
+const Select = ({ options }: SelectProps) => {
+  return (
+    <select className="bg-gray-900 p-2 rounded-md outline-none">
+      {options.map((option) => (
+        <option className="text-gray-200" value={option} key={option}>
+            {option}
+            </option>
+      ))}
+    </select>
+  );
+};
+
+export default Select;
