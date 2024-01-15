@@ -4,12 +4,14 @@ interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   title: string;
   type?: "submit" | "reset" | "button";
+  clicked?: ()=>void
 }
 
 const Button = ({
   title,
   type = "submit",
   disabled = false,
+  clicked,
   ...rest
 }: ButtonProps) => {
   return (

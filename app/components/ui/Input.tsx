@@ -6,26 +6,27 @@ import { ChangeEvent, HTMLAttributes, ReactElement } from "react";
 
 export interface InputProps extends HTMLAttributes<HTMLInputElement>{
     label?: string
-    value: string 
+    value?: string 
     name: string
+    type?: 'password' | 'text'
     placeholder?: string
-    onChange: (e: ChangeEvent<HTMLInputElement>)=> void
+    onChange?: (e: ChangeEvent<HTMLInputElement>)=> void
     isRequired?: boolean
     showLink?: boolean
     linkTitle?: string
     linkSlug?: string
-    width?: number
-
+    className?: string
 } 
 
 const  Input = ({
   label,
   isRequired = false,
+  type,
   showLink = false, name,
   linkTitle,
   linkSlug,
   placeholder,
-  width = 96,
+  className,
   value , onChange
 }: InputProps) => {
 
@@ -51,16 +52,17 @@ const  Input = ({
           </div>
         )}
       </div>
-      <div className="mt-2">
+      <div className="">
         <input placeholder={placeholder}
-         
+         type={type}
           value={value}
           onChange={onChange}
           name={name}
           autoComplete={"true"}
           // required={isRequired}
-          className={`w-full mb-5 indent-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+          className={` bg-gray-900 text-gray-200 outline-none indent-4 rounded-md border-0 py-1.5 placeholder:text-gray-400 sm:text-sm sm:leading-6 ${className}`}
         />
+       
       </div>
     </div>
   );

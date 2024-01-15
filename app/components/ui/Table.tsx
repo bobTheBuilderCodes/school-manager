@@ -36,7 +36,7 @@ const Table: React.FC<TableProps> = ({
       <thead>
         <tr className="text-left">
           {columns.map((column, index) => (
-            <th className="p-4 bg-gray-900" key={index}>
+            <th className="p-4 bg-gray-900 text-gray-200" key={index}>
               {column}
             </th>
           ))}
@@ -44,17 +44,17 @@ const Table: React.FC<TableProps> = ({
         </tr>
       </thead>
       <tbody>
-        {data.map((row, rowIndex) => (
+        {data?.map((row, rowIndex) => (
           <tr
             key={rowIndex}
-            className="p-4"
+            className="p-4 text-gray-200"
             style={{
               backgroundColor: rowIndex % 2 === 0 ? "#0D1218" : "#161B22",
             }}
           >
             {columns.map((column, columnIndex) => (
               <td
-                style={{ padding: 10 }}
+                style={{ padding: 10, color: "#B7B8BA", fontSize: 14 }}
                 key={columnIndex}
                 className={
                   getCellStyle ? getCellStyle(column, row[column]) : ""
