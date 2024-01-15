@@ -46,3 +46,34 @@ export const getStudentTickets = async (url: string) => {
     return data;
   };
   
+
+
+  interface PostDataProps {
+    url: string;
+    payload: any;
+    authToken: string
+    message?: string;
+  }
+
+export async function postData({ url, authToken, payload }: PostDataProps) {
+  
+ 
+
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+    "Content-Type": "application/json",
+  };
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+

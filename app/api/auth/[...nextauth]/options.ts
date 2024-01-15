@@ -55,7 +55,6 @@ export const authOptions : AuthOptions = {
           session.user.userRole = token.userRole;
           session.user.accessToken = token.accessToken
           session.user.userId = token.userId
-          // session.user.class = token.cla
         }
   
         return session;
