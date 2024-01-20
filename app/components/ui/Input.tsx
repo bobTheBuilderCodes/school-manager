@@ -1,36 +1,40 @@
+"use client"
 
+import React, { ChangeEvent, useState } from "react";
+import { AppstoreOutlined, EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
+export interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
+  label?: string;
+  value?: string;
+  name: string;
+  type?: 'password' | 'text';
+  placeholder?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  isRequired?: boolean;
+  showLink?: boolean;
+  linkTitle?: string;
+  linkSlug?: string;
+  className?: string;
+}
 
-
-import { ChangeEvent, HTMLAttributes, ReactElement } from "react";
-
-export interface InputProps extends HTMLAttributes<HTMLInputElement>{
-    label?: string
-    value?: string 
-    name: string
-    type?: 'password' | 'text'
-    placeholder?: string
-    onChange?: (e: ChangeEvent<HTMLInputElement>)=> void
-    isRequired?: boolean
-    showLink?: boolean
-    linkTitle?: string
-    linkSlug?: string
-    className?: string
-} 
-
-const  Input = ({
+const Input = ({
   label,
   isRequired = false,
   type,
-  showLink = false, name,
+  showLink = false,
+  name,
   linkTitle,
   linkSlug,
   placeholder,
   className,
-  value , onChange
+  value,
+  onChange
 }: InputProps) => {
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
 
-
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
 
   return (
     <div>
@@ -47,22 +51,35 @@ const  Input = ({
               href={linkSlug}
               className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
-            {linkTitle}
+              {linkTitle}
             </a>
           </div>
         )}
       </div>
-      <div className="">
-        <input placeholder={placeholder}
-         type={type}
+      <div className="relative">
+        <input
+          placeholder={placeholder}
+          type={isPasswordVisible ? 'text' : type}
           value={value}
           onChange={onChange}
           name={name}
           autoComplete={"true"}
           // required={isRequired}
-          className={` bg-gray-900 text-gray-200 outline-none indent-4 rounded-md border-0 py-1.5 placeholder:text-gray-400 sm:text-sm sm:leading-6 ${className}`}
+          className={`bg-gray-900 text-gray-200 outline-none indent-4 rounded-md border-0 py-1.5 placeholder:text-gray-400 sm:text-sm sm:leading-6 ${className}`}
         />
-       
+        {type === 'password' && (
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 pr-3 -mt-4 flex items-center cursor-pointer"
+          >
+            {isPasswordVisible ? (
+              <EyeOutlined />
+            ) : (
+              <EyeInvisibleOutlined />
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

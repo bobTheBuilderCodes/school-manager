@@ -5,7 +5,7 @@ import { ReactElement } from "react";
 import hoverClass from "@/resources/hoverClass";
 
 interface NavItemProps {
-  icon: ReactElement;
+  icon?: ReactElement;
   title: string;
   slug: string;
 }
