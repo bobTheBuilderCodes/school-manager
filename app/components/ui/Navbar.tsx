@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Paragraph } from "..";
 import hoverClass from "@/resources/hoverClass";
 import Link from "next/link";
+import { topNavItems } from "@/resources/topNavItems";
+import NavItem from "./NavItem";
 
 const Navbar = () => {
 
@@ -49,6 +51,8 @@ const Navbar = () => {
           className="rounded-full"
         />
       </div>
+
+      
     </nav>
   );
 };
