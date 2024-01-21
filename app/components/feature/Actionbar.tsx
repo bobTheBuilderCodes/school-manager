@@ -6,12 +6,9 @@ import SubHeading from "@/app/components/ui/SubHeading";
 import { api } from "@/services/endpoints";
 import { postData } from "@/services/getData";
 import { useSession } from "next-auth/react";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
-
-// ... (import statements remain unchanged)
 
 const Actionbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,8 +17,6 @@ const Actionbar = () => {
   const router = useRouter();
 
   const userId = session.data?.user.userId;
-
-  console.log("User id", userId);
 
   // forms
   const [formData, setFormData] = useState({

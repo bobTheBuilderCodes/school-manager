@@ -3,69 +3,68 @@ import { api } from "./endpoints";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 export const getData = async () => {
+  const response = await fetch(api.allStudents);
+  const data = await response.json();
 
-    const response = await fetch(api.allStudents);
-    const data = await response.json();
-  
-    if (!Array.isArray(data.students)) {
-      console.error("Invalid response format:", data);
-      return [];
-    }
-  
-    return data.students;
-  };
-  
-
-export const getStudentData = async (url: string) => {
-  const session = await getServerSession(authOptions)
-  const authToken = session?.user.accessToken
-
-  const headers = {
-    Authorization: `Bearer ${authToken}`,
-    "Content-Type": "application/json",
-    cache: "no-store",
-  };
-    const response = await fetch(url, {headers});
-    const {findStudent} = await response.json();
-  
-    return findStudent;
-  };
-
-export const getStudentTickets = async (url: string) => {
-  const session = await getServerSession(authOptions)
-  const authToken = session?.user.accessToken
-
-  const headers = {
-    Authorization: `Bearer ${authToken}`,
-    "Content-Type": "application/json",
-    cache: "no-store",
-  };
-    const response = await fetch(url, {headers});
-    const {data} = await response.json();
-  
-    return data;
-  };
-  
-
-
-  interface PostDataProps {
-    url: string;
-    payload: any;
-    authToken: string
-    message?: string;
+  if (!Array.isArray(data.students)) {
+    console.error("Invalid response format:", data);
+    return [];
   }
 
-export async function postData({ url, authToken, payload }: PostDataProps) {
-  
- 
+  return data.students;
+};
 
+export const getStudentData = async (url: string) => {
+  const session = await getServerSession(authOptions);
+  const authToken = session?.user.accessToken;
+
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+    "Content-Type": "application/json",
+    cache: "no-store",
+  };
+  const response = await fetch(url, { headers });
+  const { findStudent } = await response.json();
+
+  return findStudent;
+};
+
+export const getStudentTickets = async (url: string) => {
+  const session = await getServerSession(authOptions);
+  const authToken = session?.user.accessToken;
+
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+    "Content-Type": "application/json",
+    cache: "no-store",
+  };
+  const response = await fetch(url, { headers });
+  const { data } = await response.json();
+
+  return data;
+};
+
+interface PostDataProps {
+  url: string;
+  payload: any;
+  authToken: string;
+  message?: string;
+  method?: string;
+}
+
+export async function postData({
+  method = "POST",
+  url,
+  authToken,
+  payload,
+}: PostDataProps) {
   const headers = {
     Authorization: `Bearer ${authToken}`,
     "Content-Type": "application/json",
   };
   try {
     const response = await fetch(url, {
-      method: "POST",
+      method,
       headers,
       body: JSON.stringify(payload),
     });
@@ -77,3 +76,25 @@ export async function postData({ url, authToken, payload }: PostDataProps) {
   }
 }
 
+interface DeleteProps {
+  itemId: number;
+}
+
+export const deleteTicket = async (itemId : number, authToken: string) => {
+  
+  
+
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+  };
+
+  try {
+    await fetch(`${api.deleteTicket}/${itemId}`, {
+      method: "DELETE",
+      headers,
+      body: JSON.stringify(itemId)
+    });
+  } catch (error) {
+    console.log("error deleting", error);
+  }
+};
