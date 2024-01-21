@@ -8,7 +8,7 @@ import Actions from "./Actions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { api } from "@/services/endpoints";
-import { deleteData, postData } from "@/services/getData";
+import { postData } from "@/services/getData";
 
 const TicketActions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,25 +80,6 @@ const TicketActions = () => {
     }
   };
 
-  //Delete ticket
-  const deleteTicket = async ( ticketId: string) => {
-    const authToken = session.data?.user.accessToken!;
-    setIsLoading(false);
-    try {
-      setIsLoading(true);
-      await deleteData({
-       
-        url: `${api.deleteTicket}/${ticketId}`,
-      });
-      closeModal();
-      router.refresh();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <>
       <Actions>
@@ -146,7 +127,7 @@ const TicketActions = () => {
       {/* Delete modal */}
       <Modal isOpen={isOpenDeleteModal} onClose={closeDeleteModal}>
         <SubHeading title="Delete Ticket" className="mt-0 mb-4" />
-        <form onSubmit={()=>deleteTicket('')}>
+        <form>
           
           <Paragraph title={'Are you sure you want to delete this ticket? You cannot undo your changes again.'} className="mb-8" />
           <Button

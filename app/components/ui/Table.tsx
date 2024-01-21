@@ -12,7 +12,7 @@ interface TableProps {
   data: Array<{ [key: string]: any }>;
   getCellStyle?: (columnName: string, cellValue: any) => string;
   visibleColumns?: string[];
-  onDelete: (itemId: string | number) => void
+  onDelete?: (itemId: string | number) => void
   actions?: ReactElement;
 }
 

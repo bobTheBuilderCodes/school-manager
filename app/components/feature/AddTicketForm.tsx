@@ -1,11 +1,10 @@
-import { addPerson } from "@/actions/people.server";
 import { Button, Input } from "@/app/components";
 
 const AddTicketForm =() => {  
 
   return (
     <form 
-    action={addPerson}
+  
     >
       <Input
         name="ticketName"
