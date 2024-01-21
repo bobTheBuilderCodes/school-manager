@@ -19,6 +19,7 @@ export const api = {
   editTicket: `${baseUrl}/ticket`,
   postTicket: `${baseUrl}/ticket` , //Append the student ID
   deleteTicket: `${baseUrl}/ticket` ,
+  getTicket: `${baseUrl}/ticket` ,
 
   // Auth
   login: `${baseUrl}/auth/login`,

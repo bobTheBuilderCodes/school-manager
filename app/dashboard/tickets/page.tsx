@@ -1,7 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { Paragraph } from "@/app/components";
 import Actionbar from "@/app/components/feature/Actionbar";
-import Actions from "@/app/components/feature/Actions";
 import TicketActions from "@/app/components/feature/TicketActions";
 import Table from "@/app/components/ui/Table";
 import { api } from "@/services/endpoints";
@@ -36,12 +34,13 @@ const Tickets = async () => {
         <Actionbar />
         
       </div>
-      <Table
+      {/* <Table
         data={studentTickets?.studentTickets || []}
         visibleColumns={["ticketName", "reason", "ticketDate", "ticketStatus"]}
-        actions={
-          <TicketActions/>
-        }
+      /> */}
+      <Table content=""
+        data={studentTickets?.studentTickets || []}
+        visibleColumns={["ticketName", "reason", "ticketDate", "ticketStatus"]}
       />
     </div>
   );
