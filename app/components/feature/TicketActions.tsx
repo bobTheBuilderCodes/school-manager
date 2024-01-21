@@ -82,16 +82,6 @@ const TicketActions = () => {
 
   return (
     <>
-      <Actions>
-        <h2
-          className={`m-0 text-sm opacity-50 mx-6 cursor-pointer`}
-          onClick={openModal}
-        >
-          Edit
-        </h2>
-        <h2 className={`m-0 text-sm opacity-50 cursor-pointer`} onClick={openDeleteModal}>Delete</h2>
-      </Actions>
-
       {/* Modal component */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <SubHeading title="Edit Ticket" className="mt-0 mb-4" />

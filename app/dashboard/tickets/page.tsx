@@ -40,7 +40,7 @@ const Tickets = async () => {
         data={studentTickets?.studentTickets || []}
         visibleColumns={["ticketName", "reason", "ticketDate", "ticketStatus"]}
         actions={
-          <TicketActions />
+          <TicketActions/>
         }
       />
     </div>

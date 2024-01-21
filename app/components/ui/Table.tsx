@@ -13,6 +13,7 @@ interface TableProps {
   getCellStyle?: (columnName: string, cellValue: any) => string;
   visibleColumns?: string[];
   onDelete?: (itemId: string | number) => void
+  onEdit?: (itemId: string | number) => void
   actions?: ReactElement;
 }
 
@@ -33,7 +34,7 @@ const formatDate = (value: any): string => {
 const Table: React.FC<TableProps> = ({
   data,
   getCellStyle,
-  visibleColumns, onDelete,
+  visibleColumns, onDelete, onEdit,
   actions,
 }) => {
   const columns =
@@ -43,16 +44,20 @@ const Table: React.FC<TableProps> = ({
     const authToken = session.data?.user.accessToken!
     const router = useRouter()
 
-    const handleDelete = async(ticketId: number) => {
-      try {
-        await deleteTicket(ticketId, authToken)
-        router.refresh()
-        alert("Deleted successfully")
-      } catch (error) {
-        console.log("Error", error)
+    // const handleDelete = async(ticketId: number) => {
+    //   try {
+    //     await deleteTicket(ticketId, authToken)
+    //     router.refresh()
+    //     alert("Deleted successfully")
+    //   } catch (error) {
+    //     console.log("Error", error)
         
-      }
-      }
+    //   }
+    //   }
+
+      // const handleEdit = async(ticketId: number) => {
+      //   alert(ticketId)
+      // }
 
   return (
     <table className="w-full">
@@ -87,7 +92,11 @@ const Table: React.FC<TableProps> = ({
               </td>
             ))}
             <td style={{ padding: 10 }} className="flex justify-end">
-              <p onClick={()=>handleDelete(row["ticketId"])} className="cursor-pointer">Delete</p>
+            <Actions
+                ticketId={row['ticketId']}
+                authToken={authToken}
+              
+              />
             </td>
           </tr>
         ))}
