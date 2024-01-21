@@ -1,13 +1,19 @@
+"use client"
+
 import { formatDistanceToNow, parseISO } from "date-fns";
 import Actions from "../feature/Actions";
 import { Paragraph } from "..";
 import { ReactElement } from "react";
+import { deleteTicket } from "@/services/getData";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface TableProps {
   data: Array<{ [key: string]: any }>;
   getCellStyle?: (columnName: string, cellValue: any) => string;
-  visibleColumns?: string[]; 
-  actions?: ReactElement
+  visibleColumns?: string[];
+  onDelete: (itemId: string | number) => void
+  actions?: ReactElement;
 }
 
 const isDate = (value: any): boolean => {
@@ -22,14 +28,31 @@ const formatDate = (value: any): string => {
   return date ? formatDistanceToNow(date, { addSuffix: true }) : value;
 };
 
+
+
 const Table: React.FC<TableProps> = ({
   data,
   getCellStyle,
-  visibleColumns,
-  actions
+  visibleColumns, onDelete,
+  actions,
 }) => {
   const columns =
     visibleColumns || (data.length > 0 ? Object.keys(data[0]) : []);
+
+    const session = useSession()
+    const authToken = session.data?.user.accessToken!
+    const router = useRouter()
+
+    const handleDelete = async(ticketId: number) => {
+      try {
+        await deleteTicket(ticketId, authToken)
+        router.refresh()
+        alert("Deleted successfully")
+      } catch (error) {
+        console.log("Error", error)
+        
+      }
+      }
 
   return (
     <table className="w-full">
@@ -64,7 +87,7 @@ const Table: React.FC<TableProps> = ({
               </td>
             ))}
             <td style={{ padding: 10 }} className="flex justify-end">
-              {actions}
+              <p onClick={()=>handleDelete(row["ticketId"])} className="cursor-pointer">Delete</p>
             </td>
           </tr>
         ))}

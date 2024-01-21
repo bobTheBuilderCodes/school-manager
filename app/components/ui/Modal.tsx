@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose, children}) => {
  
 
   return isOpen ? (
-    <div className="fixed inset-0 overflow-y-auto">
+    <div className="fixed backdrop-blur-sm z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen">
         <div
           className="fixed inset-0 transition-opacity"
