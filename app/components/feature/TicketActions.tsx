@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react";
 import { Button, Input, Paragraph } from "..";
 import Modal from "../ui/Modal";
 import SubHeading from "../ui/SubHeading";
-import Actions from "./Actions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { api } from "@/services/endpoints";
@@ -16,8 +15,6 @@ const TicketActions = () => {
   const [isLoading, setIsLoading] = useState(false);
   const session = useSession();
   const router = useRouter();
-
-  const userId = session.data?.user.userId;
 
   // forms
   const [formData, setFormData] = useState({

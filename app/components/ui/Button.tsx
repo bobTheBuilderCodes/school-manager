@@ -2,7 +2,7 @@ import { HTMLAttributes } from "react";
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
-  title: string;
+  title: string | undefined;
   type?: "submit" | "reset" | "button";
   clicked?: ()=>void
 }
