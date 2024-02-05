@@ -1,46 +1,48 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import Actionbar from "@/app/components/feature/Actionbar";
-import TicketActions from "@/app/components/feature/TicketActions";
 import Table from "@/app/components/ui/Table";
 import { api } from "@/services/endpoints";
 import { getStudentTickets } from "@/services/getData";
+import { getCellStyle } from "@/utils/getCellStyle";
 import { getServerSession } from "next-auth";
 
 
-const Tickets = async () => {
+
+
+const Tickets = async ({searchParams}: {
+  searchParams: {
+    name: string,
+    status: string
+  }
+}) => {
+
+
+
+
+
   
   const session = await getServerSession(authOptions);
   const userId = session?.user.userId;
+  const status = ''
+  const pageNumber = 1
+  const pageSize = 10
   
   const studentTickets = await getStudentTickets(
-    `${api.studentTickets}/${userId}`
+    // `${api.studentTickets}/${userId}?page=${pageNumber}&size=${pageSize}&status=${status}&name=`
+    searchParams
     );
-  
-    const response = await fetch(
-    "https://65a95f44219bfa371869216b.mockapi.io/api/v1/tickets",
-    {
-      cache: "no-store",
-      next:{
-        revalidate: 0
-      }
-    } );
-    
-    const data = await response.json();
-  console.log(data)
 
+    console.log("Tickets", studentTickets?.studentTickets)
+
+  
   return (
     <div>
       <div className="flex justify-between items-center">
-        <Actionbar />
-        
+      <Actionbar/> 
       </div>
-      {/* <Table
+      <Table content="" getCellStyle={getCellStyle}
         data={studentTickets?.studentTickets || []}
-        visibleColumns={["ticketName", "reason", "ticketDate", "ticketStatus"]}
-      /> */}
-      <Table content=""
-        data={studentTickets?.studentTickets || []}
-        visibleColumns={["ticketName", "reason", "ticketDate", "ticketStatus"]}
+        visibleColumns={["name", "reason", "date", "status"]}
       />
     </div>
   );
