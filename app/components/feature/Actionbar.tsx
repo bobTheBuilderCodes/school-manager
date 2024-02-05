@@ -1,7 +1,6 @@
 "use client";
 import { Button, Input } from "@/app/components";
 import Modal from "@/app/components/ui/Modal";
-import Select from "@/app/components/ui/Select";
 import SubHeading from "@/app/components/ui/SubHeading";
 import { api } from "@/services/endpoints";
 import { postData } from "@/services/getData";
@@ -10,23 +9,29 @@ import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
 
+
 const Actionbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const session = useSession();
   const router = useRouter();
+  const [selectedValue, setSelectedValue] = useState("");
+  const [searchTerm, setSearchTerm] = useState('')
+  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);;
+
+ 
 
   const userId = session.data?.user.userId;
 
   // forms
   const [formData, setFormData] = useState({
-    ticketName: "",
+    name: "",
     reason: "",
-    ticketItem: "",
-    ticketDate: new Date(),
+    item: "",
+    date: new Date(),
   });
 
-  const { ticketItem, ticketName, reason } = formData;
+  const { item, name, reason } = formData;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -37,31 +42,30 @@ const Actionbar = () => {
   };
 
   // Add new student
-  const addTickets = async(e: FormEvent<HTMLFormElement>) => {
+  const addTickets = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const payload = formData;
     const authToken = session.data?.user.accessToken!;
-setIsLoading(false)
+    setIsLoading(false);
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await postData({
         url: `${api.postTicket}/${userId}`,
         payload,
         authToken,
       });
-      closeModal(); 
-      router.refresh()
+      closeModal();
+      router.refresh();
       setFormData({
         ...formData,
-        ticketItem: '',
-        reason: '',
-        ticketName: ''
-      })
-     
+        item: "",
+        reason: "",
+        name: "",
+      });
     } catch (error) {
       console.log(error);
-    }finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,17 +74,63 @@ setIsLoading(false)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue: string = event.target.value;
+    setSelectedValue(newValue);
+    console.log(newValue)
+    
+  };
+
+
+  const handleSearch = (): void => {
+   
+    let url = `/dashboard/tickets?status=${selectedValue}`;
+  
+    if (searchTerm.trim().length > 0) {
+      url += `&name=${searchTerm}`;
+    }
+    router.push(url);
+  };
+
+    
+  React.useEffect(() => {
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    const newTimeout = setTimeout(() => {
+      handleSearch(); 
+    }, 1000);
+
+    setDebounceTimeout(newTimeout);
+
+    return () => {
+      if (newTimeout) {
+        clearTimeout(newTimeout);
+      }
+    };
+  }, [searchTerm, selectedValue]); 
+
+
   return (
     <div className="w-full">
       <div className="flex justify-between items-center w-full mb-4">
         <SubHeading title="All Tickets" />
         <div className="flex items-center w-auto justify-end">
-          <Select options={["All", "Pending", "Approved", "Rejected"]} />
+          <select
+            id="mySelect"
+            value={selectedValue}
+            onChange={handleSelectChange}
+          >
+            <option value="approved">Approved</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
+          </select>
           <Input
             placeholder="Search tickets by name"
-            value={"" /* Provide the actual value for the search input */}
-            onChange={() => {
-              /* Provide the actual onChange function */
+            value={searchTerm}
+            onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
+            setSearchTerm( e.target.value)
             }}
             name=""
             className="w-72 py-2 mx-6"
@@ -92,22 +142,31 @@ setIsLoading(false)
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <SubHeading title="Add Ticket" className="mt-0 mb-4" />
         <form onSubmit={addTickets}>
-          <Input value={ticketName} onChange={handleChange}
-            name="ticketName"
+          <Input
+            value={name}
+            onChange={handleChange}
+            name="name"
             className="w-full mb-4"
             placeholder="Enter ticket name"
           />
-          <Input value={ticketItem} onChange={handleChange}
-            name="ticketItem"
+          <Input
+            value={item}
+            onChange={handleChange}
+            name="item"
             className="w-full mb-4"
             placeholder="Enter your title"
           />
-          <Input value={reason} onChange={handleChange}
+          <Input
+            value={reason}
+            onChange={handleChange}
             name="reason"
             className="w-full mb-4 h-20 flex items-start justify-start"
             placeholder="Enter your reason"
           />
-          <Button title={isLoading ? "Hang on dude..." : "Save"} type="submit" />
+          <Button
+            title={isLoading ? "Hang on dude..." : "Save"}
+            type="submit"
+          />
         </form>
         {/* <AddTicketForm /> */}
       </Modal>

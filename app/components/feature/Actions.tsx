@@ -27,13 +27,13 @@ const Actions: React.FC<ActionProps> = ({ ticketId }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    ticketName: '',
+    name: '',
     reason: '',
-    ticketItem: '',
-    ticketDate: new Date(),
+    item: '',
+    date: new Date(),
   });
 
-  const { ticketItem, ticketName, reason } = formData;
+  const { item, name, reason } = formData;
 
   const openModal = (type: ModalType) => {
     fetchTicket();
@@ -124,16 +124,16 @@ const Actions: React.FC<ActionProps> = ({ ticketId }) => {
             <>
               {/* Edit form fields */}
               <Input
-                value={ticketName}
+                value={name}
                 onChange={handleChange}
-                name='ticketName'
+                name='name'
                 className='w-full mb-4'
                 placeholder='Enter ticket name'
               />
               <Input
-                value={ticketItem}
+                value={item}
                 onChange={handleChange}
-                name='ticketItem'
+                name='item'
                 className='w-full mb-4'
                 placeholder='Enter your title'
               />

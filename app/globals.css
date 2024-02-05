@@ -42,3 +42,24 @@ body {
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
 }
+
+
+.pendingStyle, .approvedStyle, .rejectedStyle{
+  width: auto;
+  font-weight: 900;
+  
+  /* padding: 2px 4px; */
+}
+
+
+.pendingStyle{
+  color: rgb(111, 111, 9) !important;
+}
+
+.approvedStyle{
+  color: green !important;
+}
+ 
+.rejectedStyle{
+  color: red !important;
+}

@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { api } from "./endpoints";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import queryString from "query-string";
 
 export const getData = async () => {
   const response = await fetch(api.allStudents);
@@ -29,19 +30,40 @@ export const getStudentData = async (url: string) => {
   return findStudent;
 };
 
-export const getStudentTickets = async (url: string) => {
+export const getStudentTickets = async (searchParams: any) => {
+  const urlParams = {
+    name: searchParams?.name,
+    status: searchParams?.status
+  };
+
+  const searchQuery = queryString.stringify(urlParams);
+
+  console.log("Search query", searchQuery);
+
   const session = await getServerSession(authOptions);
   const authToken = session?.user.accessToken;
+  const userId = session?.user.userId;
 
   const headers = {
     Authorization: `Bearer ${authToken}`,
     "Content-Type": "application/json",
     cache: "no-store",
   };
-  const response = await fetch(url, { headers });
-  const { data } = await response.json();
-
-  return data;
+  try {
+    const fullUrl = `${api.studentTickets}/${userId}?${searchQuery}`; // Ensure this constructs the URL correctly
+    console.log("Full URL for fetch:", fullUrl); // Debugging
+    const response = await fetch(fullUrl, { headers });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const { data } = await response.json();
+    console.log("Query", searchQuery);
+    return data;
+  } catch (error: any) {
+    console.error("Fetch error:", error.message);
+    return null;
+  }
+  
 };
 
 interface PostDataProps {
@@ -80,10 +102,7 @@ interface DeleteProps {
   itemId: number;
 }
 
-export const deleteTicket = async (itemId : number, authToken: string) => {
-  
-  
-
+export const deleteTicket = async (itemId: number, authToken: string) => {
   const headers = {
     Authorization: `Bearer ${authToken}`,
   };
@@ -92,7 +111,7 @@ export const deleteTicket = async (itemId : number, authToken: string) => {
     await fetch(`${api.deleteTicket}/${itemId}`, {
       method: "DELETE",
       headers,
-      body: JSON.stringify(itemId)
+      body: JSON.stringify(itemId),
     });
   } catch (error) {
     console.log("error deleting", error);
