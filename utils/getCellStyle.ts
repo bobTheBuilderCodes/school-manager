@@ -1,6 +1,7 @@
 export const getCellStyle = (columnName: string, cellValue: any): string => {
     if (columnName === 'status') {
       const lowerCaseStatus = cellValue?.toLowerCase();
+      
   
       if (lowerCaseStatus === 'pending') {
         return 'pendingStyle';

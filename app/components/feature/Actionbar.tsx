@@ -7,8 +7,7 @@ import { postData } from "@/services/getData";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
-
-
+import Select from "../ui/Select";
 
 const Actionbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,10 +15,16 @@ const Actionbar = () => {
   const session = useSession();
   const router = useRouter();
   const [selectedValue, setSelectedValue] = useState("");
-  const [searchTerm, setSearchTerm] = useState('')
-  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
- 
+  const statusOptions = [
+    { value: "approved", label: "Approved" },
+    { value: "pending", label: "Pending" },
+    { value: "rejected", label: "Rejected" },
+  ];
 
   const userId = session.data?.user.userId;
 
@@ -77,29 +82,25 @@ const Actionbar = () => {
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue: string = event.target.value;
     setSelectedValue(newValue);
-    console.log(newValue)
-    
+    console.log(newValue);
   };
 
-
   const handleSearch = (): void => {
-   
     let url = `/dashboard/tickets?status=${selectedValue}`;
-  
+
     if (searchTerm.trim().length > 0) {
       url += `&name=${searchTerm}`;
     }
     router.push(url);
   };
 
-    
   React.useEffect(() => {
     if (debounceTimeout) {
       clearTimeout(debounceTimeout);
     }
 
     const newTimeout = setTimeout(() => {
-      handleSearch(); 
+      handleSearch();
     }, 1000);
 
     setDebounceTimeout(newTimeout);
@@ -109,28 +110,24 @@ const Actionbar = () => {
         clearTimeout(newTimeout);
       }
     };
-  }, [searchTerm, selectedValue]); 
-
+  }, [searchTerm, selectedValue]);
 
   return (
     <div className="w-full">
       <div className="flex justify-between items-center w-full mb-4">
         <SubHeading title="All Tickets" />
         <div className="flex items-center w-auto justify-end">
-          <select
+          <Select
             id="mySelect"
             value={selectedValue}
             onChange={handleSelectChange}
-          >
-            <option value="approved">Approved</option>
-            <option value="pending">Pending</option>
-            <option value="rejected">Rejected</option>
-          </select>
+            options={statusOptions}
+          />
           <Input
             placeholder="Search tickets by name"
             value={searchTerm}
-            onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
-            setSearchTerm( e.target.value)
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSearchTerm(e.target.value);
             }}
             name=""
             className="w-72 py-2 mx-6"

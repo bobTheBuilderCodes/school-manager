@@ -33,31 +33,29 @@ export const getStudentData = async (url: string) => {
 export const getStudentTickets = async (searchParams: any) => {
   const urlParams = {
     name: searchParams?.name,
-    status: searchParams?.status
+    status: searchParams?.status,
+    page: searchParams?.page
   };
 
   const searchQuery = queryString.stringify(urlParams);
-
-  console.log("Search query", searchQuery);
 
   const session = await getServerSession(authOptions);
   const authToken = session?.user.accessToken;
   const userId = session?.user.userId;
 
-  const headers = {
+  const headers = {    
     Authorization: `Bearer ${authToken}`,
     "Content-Type": "application/json",
     cache: "no-store",
   };
   try {
     const fullUrl = `${api.studentTickets}/${userId}?${searchQuery}`; // Ensure this constructs the URL correctly
-    console.log("Full URL for fetch:", fullUrl); // Debugging
+    
     const response = await fetch(fullUrl, { headers });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const { data } = await response.json();
-    console.log("Query", searchQuery);
     return data;
   } catch (error: any) {
     console.error("Fetch error:", error.message);
