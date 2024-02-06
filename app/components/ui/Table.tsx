@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Actions from "../feature/Actions";
 import { formatDate } from "@/utils";
+import Pagination from "../feature/Pagination";
 
 interface TableProps {
   data: Array<{ [key: string]: any }>;
@@ -27,7 +28,7 @@ const Table: React.FC<TableProps> = ({
           <tr className="text-left">
             {columns.map((column, index) => (
               <th className="p-4 bg-gray-900 text-gray-200" key={index}>
-                {column} 
+                {column.slice(0,1).toUpperCase() + column.slice(1)} 
               </th>
             ))}
             <th className="p-4 bg-gray-900"></th>
@@ -59,14 +60,11 @@ const Table: React.FC<TableProps> = ({
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan={columns.length + 1} className="p-4 bg-gray-900">
-              {pagination}
-            </td>
-          </tr>
-        </tfoot>
+       
       </table>
+      <div>
+      {/* <Pagination totalItems={3} currentPage={1} itemsPerPage={2} /> */}
+      </div>
     </div>
   );
 };
