@@ -15,6 +15,19 @@ export const getData = async () => {
   return data.students;
 };
 
+export const getNotifications = async () => {
+  const response = await fetch(api.adminNotifications);
+  const data  = await response.json();
+
+  // if (!Array.isArray(data.students)) {
+  //   console.error("Invalid response format:", data);
+  //   return [];
+
+  // }
+  return data.allnotice;
+
+};
+
 export const getStudentData = async (url: string) => {
   const session = await getServerSession(authOptions);
   const authToken = session?.user.accessToken;
