@@ -25,6 +25,9 @@ export const api = {
   login: `${baseUrl}/auth/login`,
   createStudent: `${baseUrl}/auth/createStudent`,
 
+  // Notifications
+  adminNotifications: `${baseUrl}/notifications/allnotifications`,
+
   // Quotes
   motivation: "https://zenquotes.io/api/quotes/",
   

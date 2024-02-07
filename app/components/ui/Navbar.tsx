@@ -6,8 +6,7 @@ import Image from "next/image";
 import { Paragraph } from "..";
 import hoverClass from "@/resources/hoverClass";
 import Link from "next/link";
-import { topNavItems } from "@/resources/topNavItems";
-import NavItem from "./NavItem";
+import {  EditOutlined , BellOutlined} from "@ant-design/icons";
 
 interface NavbarProps{
   className?: string
@@ -37,6 +36,10 @@ const Navbar = ({className}: NavbarProps) => {
           />
         </Link>
         <Paragraph title={"|"} />
+        <div className="bg-gray-700 p-2 rounded-full flex items-center justify-center cursor-pointer">
+
+        <BellOutlined size={40}/>
+        </div>
         <p
           className="textClip"
           onClick={() =>

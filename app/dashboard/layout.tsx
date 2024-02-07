@@ -17,12 +17,15 @@ const Layout = async({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex">
-      <div>
+      <div className="sticky top-0 left-0 h-screen">
         <Sidebar navItems={navItems} />
       </div>
       <div className="flex flex-col flex-1">
+      <div className="sticky top-0">
+
         <Navbar />
-        <div className="flex-1 overflow-y-auto p-4 bg-[#0D1218]">
+      </div>
+        <div className="flex-1 overflow-y-auto p-3 bg-[#0D1218]">
           {children}
         </div>
       </div>
