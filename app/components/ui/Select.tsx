@@ -8,7 +8,7 @@ interface SelectProps {
 
 const Select: React.FC<SelectProps> = ({ id, value, onChange, options, className }) => {
   return (
-    <select className="bg-gray-900 p-2 rounded-md outline-none" id={id} value={value} onChange={onChange}>
+    <select className={`bg-gray-900 p-2 rounded-md outline-none ${className}`} id={id} value={value} onChange={onChange}>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

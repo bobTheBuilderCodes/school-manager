@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import Select from "../ui/Select";
+import Pagination from "./Pagination";
 
 const Actionbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,8 +20,10 @@ const Actionbar = () => {
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
+  const [page, setPage] = useState(1);
 
   const statusOptions = [
+    {value: "", label: 'All'},
     { value: "approved", label: "Approved" },
     { value: "pending", label: "Pending" },
     { value: "rejected", label: "Rejected" },
@@ -86,10 +89,15 @@ const Actionbar = () => {
   };
 
   const handleSearch = (): void => {
-    let url = `/dashboard/tickets?status=${selectedValue}`;
+    // let url = `/dashboard/tickets`;
+    let url = `/dashboard/tickets?page=${page}`;
+    if (selectedValue) {
+      url += `?status=${selectedValue}`;
+    }
 
     if (searchTerm.trim().length > 0) {
-      url += `&name=${searchTerm}`;
+      const separator = url.includes('?') ? '&' : '?';
+      url += `${separator}name=${searchTerm}`;
     }
     router.push(url);
   };
@@ -110,7 +118,7 @@ const Actionbar = () => {
         clearTimeout(newTimeout);
       }
     };
-  }, [searchTerm, selectedValue]);
+  }, [searchTerm, selectedValue, page]);
 
   return (
     <div className="w-full">
@@ -167,6 +175,8 @@ const Actionbar = () => {
         </form>
         {/* <AddTicketForm /> */}
       </Modal>
+      
+      <Pagination page={page} setPage={setPage} />
     </div>
   );
 };

@@ -8,18 +8,19 @@ interface TableProps {
   getCellStyle?: (columnName: string, cellValue: any) => string;
   visibleColumns?: string[];
   content: string;
-  pagination?: ReactNode; // New prop for pagination component
+  
 }
 
 const Table: React.FC<TableProps> = ({
   data,
   getCellStyle,
   visibleColumns,
-  content,
-  pagination,
 }) => {
   const columns =
     visibleColumns || (data.length > 0 ? Object.keys(data[0]) : []);
+
+
+ 
 
   return (
     <div className="w-full">
@@ -63,7 +64,7 @@ const Table: React.FC<TableProps> = ({
        
       </table>
       <div>
-      {/* <Pagination totalItems={3} currentPage={1} itemsPerPage={2} /> */}
+      {/* <Pagination page={page} setPage={e => setPage(page + 1)} /> */}
       </div>
     </div>
   );

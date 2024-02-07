@@ -1,56 +1,31 @@
-// Pagination.tsx
-"use client"
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React from 'react';
+import SubHeading from '../ui/SubHeading';
 
-interface PaginationProps {
-  totalItems: number;
-  itemsPerPage: number;
-  currentPage: number;
-//   onPageChange: (page: number) => void;
-}
+// Define a type for the props
+type PaginationProps = {
+  page: number;
+  setPage: (page: number) => void;
+};
+
+const Pagination: React.FC<PaginationProps> = ({ page, setPage }) => {
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setPage(page - 1);
+  };
 
 
-const Pagination: React.FC<PaginationProps> = ({
-  totalItems,
-  itemsPerPage,
-  currentPage,
-//   onPageChange,
-}) => {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const [page, setPage] =useState(2)
-
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-  const router = useRouter()
-
-  const handleNextPageChange = () => {
-   router.push(`/dashboard/tickets?page=${page}&size=2`)
-  }
 
   return (
-    <div className="flex justify-end items-center space-x-2 mt-4">
-      <button
-        className={`px-4 py-2 cursor-pointer ${currentPage === 1 ? 'text-gray-500' : 'text-gray-500'} `}
-        // onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        Prev
+    <div className="text-right my-4 flex justify-end items-center">
+      <button className='bg-gray-700 p-2 rounded-md mx-2' onClick={handlePreviousPage} disabled={page <= 1}>
+        Previous
       </button>
-      {pages.map((page) => (
-        <button
-          key={page}
-          className={`px-4 py-2 ${currentPage === page ? 'bg-gray-800 text-white' : 'bg-white text-gray-500'} `}
-        //   onClick={() => onPageChange(page)}
-        >
-          {page}
-        </button>
-      ))}
-      <button
-        className={`px-4 py-2 cursor-pointer ${currentPage === totalPages ? 'text-gray-500' : 'text-gray-500'} `}
-        onClick={handleNextPageChange}
-        disabled={currentPage === totalPages}
-      >
+     <SubHeading title={page} className='mx-3 font-black text-xl' />
+    
+      <button className="mx-2 bg-gray-700 p-2 rounded-md" onClick={handleNextPage}>
         Next
       </button>
     </div>

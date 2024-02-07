@@ -3,11 +3,25 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import NavItem from "./NavItem";
-import { navItems } from "@/resources/navItems";
+// import { navItems } from "@/resources/navItems";
 import assets from "@/resources/assets";
 import { AppstoreOutlined, HomeOutlined, DoubleRightOutlined, DoubleLeftOutlined , SettingOutlined, TeamOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 
-const Sidebar = () => {
+
+interface NavItem {
+  icon: string,
+  title: string;
+  slug: string;
+};
+
+interface SidebarProps{
+  className?: string
+  navItems: NavItem[]
+}
+
+
+
+const Sidebar = ({className, navItems}: SidebarProps) => {
 
     const navIcons = [<HomeOutlined key={Math.random() * 2300} />, <AppstoreOutlined key={Math.random() * 2300} />, <TeamOutlined key={Math.random() * 2300} />, <UsergroupAddOutlined key={Math.random() * 2300} />, <SettingOutlined key={Math.random() * 2300}/>]
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +30,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`bg-[#0E1117] h-screen border-r-2 border-gray-900 transition-all duration-3000 cursor-pointer ${navStyle}`}
+      className={`bg-[#0E1117] h-screen border-r-2 border-gray-900 transition-all duration-3000 cursor-pointer ${className} ${navStyle}`}
     >
       <div className="flex justify-between mx-3 rounded-full ">
         <Image
@@ -32,7 +46,7 @@ const Sidebar = () => {
         </button>
       </div>
 
-      {navItems.map((navItem, index) => (
+      {navItems?.map((navItem, index) => (
        
         <NavItem
           key={navItem.title}

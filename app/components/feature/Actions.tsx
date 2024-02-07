@@ -8,6 +8,7 @@ import SubHeading from '../ui/SubHeading';
 import { Button, Input, Paragraph } from '..';
 import { api } from '@/services/endpoints';
 import { useSession } from 'next-auth/react';
+import {  EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 interface ActionProps {
   ticketId: number;
@@ -98,13 +99,13 @@ const Actions: React.FC<ActionProps> = ({ ticketId }) => {
           className='mx-5 m-0 text-sm opacity-50 cursor-pointer'
           onClick={() => openModal(ModalType.Edit)}
         >
-          Edit
+          <EditOutlined />
         </p>
         <p
           onClick={() => openModal(ModalType.Delete)}
           className='m-0 text-sm opacity-50 cursor-pointer'
         >
-          Delete
+          <DeleteOutlined />
         </p>
       </div>
 
