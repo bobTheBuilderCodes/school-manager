@@ -4,6 +4,7 @@ import Navbar from "../components/ui/Navbar";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/options";
+import { navItems } from "@/resources/navItems";
 
 
 
@@ -17,7 +18,7 @@ const Layout = async({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex">
       <div>
-        <Sidebar />
+        <Sidebar navItems={navItems} />
       </div>
       <div className="flex flex-col flex-1">
         <Navbar />

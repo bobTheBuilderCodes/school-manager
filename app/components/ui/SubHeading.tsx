@@ -1,7 +1,7 @@
 
 
 interface HeadingProps{
-  title: string | undefined,
+  title: string | number | undefined,
   className?: string
 }
 const SubHeading = ({title, className}: HeadingProps) => {

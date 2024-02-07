@@ -8,8 +8,12 @@ import { authOptions } from "./api/auth/[...nextauth]/options";
 export default async function Login() {
  
   const session = await getServerSession(authOptions)
+  const accessToken = session?.user.accessToken
+  const userRole = session?.user.userRole
 
-  if(session?.user.accessToken){
+
+  
+  if (accessToken && userRole){
     redirect("/dashboard")
   }
 
