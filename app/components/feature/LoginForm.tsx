@@ -50,7 +50,7 @@ const router = useRouter()
           <Link href={'/forgot-password'}>
             <Paragraph title='Forgot Password' className='underline text-right mb-5' />
           </Link>
-          <Button title={`${isLoading ? 'Logging in...' : 'Log in'}`} type='submit' />
+          <Button title={`${isLoading ? 'Logging in...' : 'Log in'}`} type='submit' disabled={isLoading ? true : false} />
         </Card>
       </form>
   )

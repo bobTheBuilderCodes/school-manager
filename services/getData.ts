@@ -24,7 +24,7 @@ export const getNotifications = async () => {
   //   return [];
 
   // }
-  return data.allnotice;
+  return data?.allnotice;
 
 };
 

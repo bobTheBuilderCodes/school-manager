@@ -1,5 +1,4 @@
 const baseUrl = "https://schoolsphere-backend.onrender.com/v1"
-let status
 export const api = {
 
   // Students Details
@@ -11,15 +10,11 @@ export const api = {
   allTickets: `${baseUrl}/ticket/allTickets`,
   studentTickets: `${baseUrl}/ticket/tickets`, 
   getTickets: `${baseUrl}/ticket/tickets`,
-  getPendingTickets: `${baseUrl}/ticket/pending/pendingTickets`,
-  getApprovedTickets: `${baseUrl}/ticket/approved/approvedTickets`,
-  getRejectedTickets: `${baseUrl}/ticket/rejected/rejectedTickets`,
-  getTicketsByStatus: `${baseUrl}/ticket/${status}/${status}Tickets`,
-  searchTicketByName: `${baseUrl}/ticket`,
   editTicket: `${baseUrl}/ticket`,
   postTicket: `${baseUrl}/ticket` , //Append the student ID
   deleteTicket: `${baseUrl}/ticket` ,
   getTicket: `${baseUrl}/ticket` ,
+  approveTicket: `${baseUrl}/ticket/approval`, //Append ticket id
 
   // Auth
   login: `${baseUrl}/auth/login`,

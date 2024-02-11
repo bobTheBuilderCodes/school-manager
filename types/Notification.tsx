@@ -7,6 +7,7 @@ type notification =
     isRead: boolean,
     studentId: string,
     teacherId: string,
+    ticketId: number,
     userId: string,
     createdAt: string,
     updatedAt: string
