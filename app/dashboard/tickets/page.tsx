@@ -21,14 +21,15 @@ const Tickets = async ({
   return (
     <div>
       <div className="flex justify-between items-center">
-        <Actionbar />
+        {/* <Actionbar /> */}
+        <h1>Hidden</h1>
       </div>
-      <Table
+      {/* <Table
         content=""
         getCellStyle={getCellStyle}
         data={studentTickets?.studentTickets || []}
         visibleColumns={["name", "reason", "date", "status"]}
-      />
+      /> */}
     </div>
   );
 };
