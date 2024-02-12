@@ -22,7 +22,7 @@ const Tickets = async ({
     <div>
       <div className="flex justify-between items-center">
         {/* <Actionbar /> */}
-        <h1>Hidden</h1>
+        <h1>We will be back</h1>
       </div>
       {/* <Table
         content=""
