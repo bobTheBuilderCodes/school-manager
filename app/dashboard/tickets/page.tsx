@@ -1,4 +1,5 @@
 import Actionbar from "@/app/components/feature/Actionbar";
+import Pagination from "@/app/components/feature/Pagination";
 import Table from "@/app/components/ui/Table";
 import { getStudentTickets } from "@/services/getData";
 import { getCellStyle } from "@/utils/getCellStyle";

@@ -17,7 +17,7 @@ const Navbar = ({className}: NavbarProps) => {
   const {data} = useSession()
   const userId = data?.user.userId
   return (
-    <nav className={`border-b-2 border-gray-900 bg-[#0E1117] p-3 w-full h-auto z-20 flex justify-between items-center ${className}`}>
+    <nav className={` border-b-2 border-gray-900 bg-[#0E1117] p-3 w-full h-auto z-50 flex justify-between items-center ${className}`}>
       <>
         <p></p>
       </>

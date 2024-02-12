@@ -15,6 +15,7 @@ export const api = {
   deleteTicket: `${baseUrl}/ticket` ,
   getTicket: `${baseUrl}/ticket` ,
   approveTicket: `${baseUrl}/ticket/approval`, //Append ticket id
+  rejectTicket: `${baseUrl}/ticket/reject`, //Append ticket id
 
   // Auth
   login: `${baseUrl}/auth/login`,

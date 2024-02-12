@@ -1,63 +1,112 @@
 "use client"
 
-import { approveTicket } from "@/services/tickets";
-import { Card } from "..";
+import React, { useState } from "react";
+import { approveTicket, rejectTicket } from "@/services/tickets";
+import { Button, Card, Paragraph } from "..";
 import SubHeading from "../ui/SubHeading";
 import { api } from "@/services/endpoints";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Modal from "../ui/Modal";
 
-interface NotificationsProps {
-  notifications: notification[];
+interface Notification {
+  content: string;
+  id: number;
+  isRead: boolean;
+  ticketId: number; 
 }
 
+interface NotificationsProps {
+  notifications: Notification[];
+}
 
+const TicketAction = ({ notifications }: NotificationsProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedTicketId, setSelectedTicketId] = useState<number | null>(null); 
+  const session = useSession();
+  const authToken = session.data?.user.accessToken as string;
+  const router = useRouter();
 
-const TicketAction =  ({ notifications }: NotificationsProps) => {
+  const openModal = (ticketId: number) => {
+    setSelectedTicketId(ticketId); 
+    setIsModalOpen(true);
+  };
 
-    const session = useSession()
-    const authToken = session.data?.user.accessToken!
-    const router = useRouter()
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
-    const approveTicketHandler = async(id: number) => {
-      try {
-        await approveTicket({
-            method: 'POST',
-            url: `${api.approveTicket}/${id}`,
-            authToken,
-            payload: {ticketId: id},
-          });
-          router.refresh()
-        // console.log("Running")
-      } catch (error) {
-        console.log(error)
-      }
-      alert(id)
+  const approveTicketHandler = async (id: number) => {
+    try {
+      await approveTicket({
+        method: "POST",
+        url: `${api.approveTicket}/${id}`,
+        authToken,
+        payload: { ticketId: id },
+      });
+      router.refresh();
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const filteredNotification = notifications?.filter(notification => notification.isRead === false)
-    // console.log("Notifications", notifications)
+  const rejectTicketHandler = async () => {
+    try {
+      if (selectedTicketId !== null) {
+        await rejectTicket({
+          method: "POST",
+          url: `${api.rejectTicket}/${selectedTicketId}`,
+          authToken,
+          payload: { ticketId: selectedTicketId },
+        });
+        router.refresh();
+      }
 
-
-    // console.log("Filtered", filteredNotification)
+      alert(selectedTicketId)
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
-      {notifications?.map(({ content, id, isRead, ticketId   }) => (
+      {notifications.map(({ content, id, isRead, ticketId }) => (
         <Card
           className={`my-4 h-auto bg-red w-full ${isRead && "bg-blue-500"}`}
           key={id}
         >
-          {isRead && (
-            <span className="bg-green-100 text-green-700 rounded-full text-right px-2">
-              new
-            </span>
-          )}
-          <SubHeading className="mb-3 text-sm text-gray-400" title={content} />
-          <button onClick={()=>approveTicketHandler(ticketId)}>Approve</button>
-          {/* <button onClick={()=>approveTicketHandler(id)} className="mx-7">Disapprove</button> */}
+          <SubHeading className="text-sm text-gray-400 mb-5" title={content} />
+          <button
+            onClick={() => approveTicketHandler(ticketId)}
+            className="text-green-500 bg-gray-800 rounded-md px-4 py-2"
+          >
+            Approve
+          </button>
+          <button
+            onClick={() => openModal(ticketId)} // Pass ticketId to openModal
+            className="text-red-500 mx-6 bg-gray-800 rounded-md px-4 py-2"
+          >
+            Reject
+          </button>
         </Card>
       ))}
+
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <SubHeading title="Delete Ticket?" className="mt-0 mb-4" />
+        <Paragraph
+          title={
+            "Are you sure you want to delete this ticket? This ticket's records will be permanently deleted"
+          }
+          className="mb-8"
+        />
+        <Button
+          className="mb-6"
+          onClick={rejectTicketHandler}
+          title={isLoading ? "Hang on dude..." : "Delete ticket"}
+          type="submit"
+        />
+      </Modal>
     </div>
   );
 };

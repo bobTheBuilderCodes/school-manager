@@ -120,7 +120,7 @@ const Actions: React.FC<ActionProps> = ({ ticketId }) => {
           className='mt-0 mb-4'
         />
         <form onSubmit={handleFormSubmit}>
-          {/* Render specific form fields based on modal type */}
+         
           {modalType === ModalType.Edit && (
             <>
               {/* Edit form fields */}
