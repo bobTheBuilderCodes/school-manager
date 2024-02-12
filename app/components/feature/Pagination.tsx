@@ -1,4 +1,3 @@
-import React from 'react';
 import SubHeading from '../ui/SubHeading';
 
 // Define a type for the props

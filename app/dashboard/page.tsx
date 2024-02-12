@@ -3,8 +3,9 @@ import { Card, Heading, Paragraph } from "../components";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import { getNotifications } from "@/services/getData";
 import SubHeading from "../components/ui/SubHeading";
-import { Button } from "antd";
 import TicketAction from "../components/feature/TicketAction";
+import { getData } from "@/services/getData";
+import { StudentDetails } from "@/types/StudentProps";
 
 const DashboardHome = async () => {
   const session = await getServerSession(authOptions);
@@ -12,7 +13,10 @@ const DashboardHome = async () => {
   const loggedInUser = session?.user.loggedInUser;
   const userRole = session?.user.userRole;
 
-  const allNotifications: notification[] = await getNotifications();
+  // const students = await getData(); 
+  // const allNotifications: notification[] = await getNotifications();
+
+  const [allNotifications, allStudents] = await Promise.all([getNotifications(), getData()]);
 
   const announcements = new Array(9).fill({
     content: "This is an announcement",
@@ -20,6 +24,7 @@ const DashboardHome = async () => {
   });
 
   return (
+
     <main className="flex flex-wrap md:flex-nowrap">
 
       <section className="w-full md:w-2/3 p-4">
@@ -30,7 +35,7 @@ const DashboardHome = async () => {
           <div className="flex flex-wrap justify-between my-6">
             <Card className="w-full md:w-[30%] p-3 cardGradient">
               <Paragraph title={"Total students"} className="text-white" />
-              <Heading title="1,520" className="text-4xl" />
+              <Heading title={allStudents?.length} className="text-4xl" />
             </Card>
             <Card className="w-full md:w-[30%] p-3 mx-0 md:mx-3 my-3 md:my-0 cardGradient">
               <Paragraph title={"Total teachers"} className="text-white" />

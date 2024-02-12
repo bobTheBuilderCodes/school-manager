@@ -33,3 +33,32 @@ export async function approveTicket({
     console.log(error);
   }
 }
+
+export async function rejectTicket({
+  method = "POST",
+  url,
+  authToken,
+  payload,
+  message,
+}: ticketProps) {
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+    "Content-Type": "application/json",
+    cache: "no-store",
+  };
+  try {
+    const response = await fetch(url, {
+      method,
+      headers,
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+    console.log("Results", result);
+    alert(`message from backend ${result.message}`);
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+

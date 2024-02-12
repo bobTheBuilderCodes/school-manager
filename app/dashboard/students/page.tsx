@@ -8,6 +8,8 @@ import React, { Suspense } from "react";
 
 const Students = async () => {
   const students : StudentDetails[] = await getData(); 
+
+  console.log("Student list", students)
   
   return (
     <>
