@@ -176,7 +176,7 @@ const Actionbar = () => {
         {/* <AddTicketForm /> */}
       </Modal>
       
-      <Pagination page={page} setPage={setPage} />
+      {/* <Pagination page={page} setPage={setPage} /> */}
     </div>
   );
 };

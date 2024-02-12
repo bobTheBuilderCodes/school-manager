@@ -34,12 +34,12 @@ const DashboardHome = async () => {
           className="mb-1 text-4xl"
         />
         <Paragraph
-          title={"You look so good today. Shine like a beacon"}
+          title={"You look so good today. Shine like a beacon!"}
           className="mb-12"
         />
         {/* Admin stats */}
         {userRole === "admin" && (
-          <div className="flex flex-wrap justify-between my-6">
+          <div className="flex justify-between my-6">
             <Card className="w-full md:w-[30%] p-3 cardGradient">
               <Paragraph title={"Total students"} className="text-white" />
               <Heading title={allStudents?.length} className="text-4xl" />
