@@ -13,10 +13,13 @@ const DashboardHome = async () => {
   const loggedInUser = session?.user.loggedInUser;
   const userRole = session?.user.userRole;
 
-  // const students = await getData(); 
+  // const students = await getData();
   // const allNotifications: notification[] = await getNotifications();
 
-  const [allNotifications, allStudents] = await Promise.all([getNotifications(), getData()]);
+  const [allNotifications, allStudents] = await Promise.all([
+    getNotifications(),
+    getData(),
+  ]);
 
   const announcements = new Array(9).fill({
     content: "This is an announcement",
@@ -24,12 +27,16 @@ const DashboardHome = async () => {
   });
 
   return (
-
     <main className="flex flex-wrap md:flex-nowrap">
-
       <section className="w-full md:w-2/3 p-4">
-        <Heading title={`Good morning ${loggedInUser} 🚀`} className="mb-1 text-4xl"/>
-        <Paragraph title={'You look so good today. Shine like a beacon'} className="mb-12" />
+        <Heading
+          title={`Good morning ${loggedInUser} 🚀`}
+          className="mb-1 text-4xl"
+        />
+        <Paragraph
+          title={"You look so good today. Shine like a beacon"}
+          className="mb-12"
+        />
         {/* Admin stats */}
         {userRole === "admin" && (
           <div className="flex flex-wrap justify-between my-6">
@@ -65,7 +72,22 @@ const DashboardHome = async () => {
           </div>
         )}
 
-        <SubHeading title={`Announcements (${announcements.length})`} className="my-4" />
+        <div className="flex justify-between my-6 items-center">
+          <SubHeading
+            title={`Announcements (${announcements.length})`}
+            className="my-4"
+          />
+          {userRole === "admin" ? (
+            <button
+              // onClick={() => approveTicketHandler(ticketId)}
+              className="text-green-500 bg-gray-800 rounded-md px-4 py-2 items-center"
+            >
+              Create announcement
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
 
         {announcements.map((announcement, index) => (
           <Card className="w-full my-2" key={index}>

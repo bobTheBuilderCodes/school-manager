@@ -118,7 +118,7 @@ const Actionbar = () => {
         clearTimeout(newTimeout);
       }
     };
-  }, [searchTerm, selectedValue, page]);
+  }, [searchTerm, selectedValue, page, debounceTimeout, handleSearch]);
 
   return (
     <div className="w-full">
